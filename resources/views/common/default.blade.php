@@ -16,11 +16,9 @@
     </head>
     <body>
         @include('common.header')
+        @include('common._messages')
+        @yield('content')
 
-        <div class="container">
-            @include('common._messages')
-            @yield('content')
-        </div>
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
