@@ -11,6 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'StaticPagesController@home')->name('home');
+
+//用户资源路由
+Route::resource('users', 'UsersController');
+//显示登陆页面
+Route::get('login', 'SessionsController@create')->name('signIn');
