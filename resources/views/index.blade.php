@@ -6,9 +6,9 @@
 
     <script>
         var trace1 = {
-          x: [1, 2, 3, 4],
-          y: [10, 15, 13, 17],
-          text: ['1', '2', '3', '4'],
+          x: @json($xaxis),
+          y: @json($yaxis),
+          text: @json($citiesName),
           textposition: 'bottom center',
           textfont: {
             family:  'Raleway, sans-serif'
@@ -18,13 +18,13 @@
           marker: { size: 50 }
         };
 
-        var trace2 = {
-          x: [1, 3],
-          y: [10, 13],
-          type: 'scatter'
-        };
+        // var trace2 = {
+        //   x: [1, 3],
+        //   y: [10, 13],
+        //   type: 'scatter'
+        // };
 
-        var data = [trace1, trace2];
+        var data = [trace1];
         var layout = {
             showlegend: false,
             xaxis:{
