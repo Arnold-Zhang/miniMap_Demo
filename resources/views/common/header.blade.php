@@ -19,13 +19,41 @@
                     <a href="/">Home</a>
                 </li>
 
-                <li>
+				@if (Auth::check())
+				<li>
+                    <a href="/">{{ Auth::user()->name }}</a>
+                </li>
+
+				@if (Auth::user()->isAdmin)
+				<li>
+                    <a href="#">Add City</a>
+                </li>
+
+				<li>
+                    <a href="#">Add Road</a>
+                </li>
+				@endif
+
+				<li>
+					<a id="signOut" href="#">
+                      <form action="{{ route('signOut') }}" method="POST">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+                        <button class="btn btn-link" style="padding:0;" type="submit">Sign Out</button>
+                      </form>
+                    </a>
+                </li>
+
+				@else
+
+				<li>
                     <a href="{{ route('signIn') }}">Sign In</a>
                 </li>
 
 				<li>
                     <a href="{{ route('users.create') }}">Sign Up</a>
                 </li>
+				@endif
 
             </ul>
         </div>
