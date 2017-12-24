@@ -10,9 +10,9 @@ class StaticPagesController extends Controller
 {
     public function home()
     {
-        $citiesName = City::pluck('name')->toArray();
-        $xaxis = City::pluck('xaxis')->toArray();
-        $yaxis = City::pluck('yaxis')->toArray();
+        $citiesName = City::orderBy('id')->pluck('name')->toArray();
+        $xaxis = City::orderBy('id')->pluck('xaxis')->toArray();
+        $yaxis = City::orderBy('id')->pluck('yaxis')->toArray();
         $param = [
             'citiesName'   =>  $citiesName,
             'xaxis' => $xaxis,
