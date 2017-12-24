@@ -15,7 +15,7 @@
           },
           mode: 'markers+text',
           type: 'scatter',
-          marker: { size: 50 }
+          marker: { size: 20 }
         };
 
         // var trace2 = {
