@@ -18,6 +18,8 @@ Route::get('signup', 'UsersController@create')->name('signup');
 
 //用户资源路由
 Route::resource('users', 'UsersController');
+//城市资源路由
+Route::resource('cities', 'CitiesController');
 //显示登陆页面
 Route::get('signIn', 'SessionsController@create')->name('signIn');
 //创建新会话（登陆）
