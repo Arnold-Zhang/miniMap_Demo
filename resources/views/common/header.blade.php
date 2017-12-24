@@ -26,22 +26,26 @@
 
 				@if (Auth::user()->isAdmin)
 				<li>
-                    <a href="#">Add City</a>
+					<button type="button" class="btn btn-link" data-toggle="modal" data-target="#addCity">
+					  Add City
+					</button>
                 </li>
 
 				<li>
-                    <a href="#">Add Road</a>
+					<button type="button" class="btn btn-link" data-toggle="modal" data-target="#addRoad">
+					  Add Road
+					</button>
                 </li>
 				@endif
 
 				<li>
-					<a id="signOut" href="#">
+
                       <form action="{{ route('signOut') }}" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
                         <button class="btn btn-link" type="submit">Sign Out</button>
                       </form>
-                    </a>
+
                 </li>
 
 				@else

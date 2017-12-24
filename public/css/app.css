@@ -3,6 +3,10 @@ body {
 }
 
 .btn-link {
-  padding: 0;
+  padding: 15px;
+}
+
+.btn-link:hover {
+  text-decoration: none;
 }
 
