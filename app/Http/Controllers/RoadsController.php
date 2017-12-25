@@ -32,6 +32,7 @@ class RoadsController extends Controller
         $cityARoads = $cityA->roads;
         $cityBRoads = $cityB->roads;
 
+        // 获取两个城市已有道路Ids
         $cityARoadIds = [];
         $cityBRoadIds = [];
         foreach ($cityARoads as $cityARoad) {
