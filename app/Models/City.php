@@ -12,6 +12,6 @@ class City extends Model
 
     public function roads()
     {
-        return $this->belongsToMany('App\Models\Road', 'CitiesToRoads', 'cityId', 'roadId');
+        return $this->belongsToMany('App\Models\Road', 'cities_to_roads', 'cityId', 'roadId');
     }
 }
