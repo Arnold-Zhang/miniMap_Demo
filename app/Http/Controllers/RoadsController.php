@@ -48,7 +48,11 @@ class RoadsController extends Controller
         }
 
         $road->distance = sqrt(pow(abs($cityA->xaxis - $cityB->xaxis), 2) + pow(abs($cityA->yaxis - $cityB->yaxis), 2));
+
+        // 储存道路并更新关联
         $road->save();
+        $road->cities()->attach($cityA->id);
+        $road->cities()->attach($cityB->id);
 
         session()->flash('success', 'Add Road Success!');
         return redirect(route('home'));
