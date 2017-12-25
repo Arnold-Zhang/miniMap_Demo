@@ -90,10 +90,8 @@
           type: 'scatter',
           marker: { size: 20 }
         };
-
-
-        var roads = @json($roads);
         var data = [trace1];
+        var roads = @json($roads);
 
         var trace;
         for(var v in roads){
