@@ -15,7 +15,7 @@ class CreateRoadsTable extends Migration
     {
         Schema::create('roads', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('distance');
+            $table->double('distance', 15,2);
             $table->timestamps();
         });
     }
