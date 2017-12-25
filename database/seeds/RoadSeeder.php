@@ -1,8 +1,9 @@
 <?php
 
+use App\Models\Road;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class RoadSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,8 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(UserSeeder::class);
-        $this->call(CitySeeder::class);
-        $this->call(RoadSeeder::class);
+        $roads = factory(Road::class)->times(10)->make();
     }
 }
