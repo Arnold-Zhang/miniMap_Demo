@@ -18,8 +18,8 @@ class CreateCitiesToRoads extends Migration
             $table->integer('roadId');
             $table->integer('cityId');
             $table->timestamps();
-            // $table->foreign('roadId')->references('id')->on('roads')->onDelete('cascade');
-            // $table->foreign('cityId')->references('id')->on('cities')->onDelete('cascade');
+            // $table->foreign('roadId')->references('id')->on('roads');
+            // $table->foreign('cityId')->references('id')->on('cities');
         });
     }
 
@@ -30,6 +30,6 @@ class CreateCitiesToRoads extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('CitiesToRoads');
+        Schema::dropIfExists('cities_to_roads');
     }
 }
