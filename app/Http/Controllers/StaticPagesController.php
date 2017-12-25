@@ -25,6 +25,7 @@ class StaticPagesController extends Controller
                 $y[] = $city['yaxis'];
                 $roads[$road->id] = [
                     'id'    =>  $road->id,
+                    'distance'  =>  $road->distance,
                     'xaxis' =>  $x,
                     'yaxis' =>  $y
                 ];

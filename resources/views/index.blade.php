@@ -93,22 +93,21 @@
 
 
         var roads = @json($roads);
-
-        // var trace2 = {
-        //   x: roads[1]['xaxis'],
-        //   y: roads[1]['yaxis'],
-        //   type: 'scatter'
-        // };
-
-        // for (var i = 0; i < roads.length; i++) {
-        //     var trace = {
-        //       x: roads[i]['xaxis'],
-        //       y: roads[i]['yaxis'],
-        //       type: 'scatter'
-        //     };
-        // }
-
         var data = [trace1];
+
+        var trace;
+        for(var v in roads){
+            trace = {
+                x: roads[v]['xaxis'],
+                y: roads[v]['yaxis'],
+                type: 'scatter',
+                marker: {
+                    color: '#000'
+                },
+            };
+            data.push(trace);
+        }
+
         var layout = {
             showlegend: false,
             xaxis:{
