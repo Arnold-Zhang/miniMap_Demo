@@ -42,6 +42,7 @@ class Common {
 
         // 初始化A城市到个点的距离
         $distances = [];
+        $linkPoints = [];   // 与城市A直连的城市
         foreach ($points as $v) {
             $distances[$v]['distance'] = INF;
             $distances[$v]['trace'] = City::find($idA)->name . " -> " . City::find($v)->name;
@@ -52,6 +53,7 @@ class Common {
             if (!empty($cities)) {
                 $id = array_values( array_diff($cities, [$idA]) )[0];
                 $distances[$id]['distance'] = Road::find($rId)->distance;
+                $linkPoints[] = $id;
             }
         }
 
