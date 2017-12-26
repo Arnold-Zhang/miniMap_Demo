@@ -20,77 +20,80 @@ class Common {
 
         // 若存在A或B没有道路,直接距离返回 '-'
         if (!in_array($idA, $citiesIds) || !in_array($idB, $citiesIds)) {
-            return ['distance' => '-'];
+            // return ['distance' => '-'];
+            return [
+                $idB => ['distance' => INF,
+                         'trace' => City::find($idA)->name . " -> " . City::find($idB)->name
+                        ]
+            ];
         }
+
+        // 最短路径集合初始化
+        foreach ($citiesIds as $v) {
+            $shortests[$v] = [
+                'distance' => INF,
+                'trace' => City::find($idA)->name,
+            ];
+        }
+        $shortests[$idA]['distance'] = 0;
+        $S = [$idA];    // 已获得最短路径的城市
 
         // 去掉A城市id
-        $key=array_search($idA ,$citiesIds);
-        array_splice($citiesIds,$key,1);
-
-        // 将键值换成城市id
-        $points = [];
-        foreach ($citiesIds as $value) {
-            $points[$value] = $value;
+        $D = $citiesIds;    // 未获得最短路径的城市
+        $key=array_search($idA ,$D);
+        array_splice($D,$key,1);
+        foreach ($D as $cityId ) {
+            $tmpIds[$cityId] = INF; // 未获最短路径城市初始化为无穷大
         }
 
-        // A城市所有道路id
-        $roadsA = City::find($idA)->roads->toArray();
-        $roadsIdA = [];
-        foreach ($roadsA as $road) {
-            $roadsIdA[] = $road['id'];
-        }
+        // 算法开始
+        for ($i = 0; $i < count($citiesIds)-1 ; $i++) {
+            $min = INF;
 
-        // 初始化A城市到个点的距离
-        $distances = [];
-        $linkPoints = [];   // 与城市A直连的城市
-        foreach ($points as $v) {
-            $distances[$v]['distance'] = INF;
-            $distances[$v]['trace'] = City::find($idA)->name . " -> " . City::find($v)->name;
-        }
+            for ($j =  0; $j < count($citiesIds); $j++) {
+                $tmpId = $citiesIds[$j]; // 当前目标点
+                if ($tmpId == $idA) {
+                    continue;
+                }
 
-        foreach ($roadsIdA as $rId) {
-            $cities = DB::table('cities_to_roads')->where('roadId', $rId)->pluck('cityId')->toArray();
-            if (!empty($cities)) {
-                $id = array_values( array_diff($cities, [$idA]) )[0];
-                $distances[$id]['distance'] = Road::find($rId)->distance;
-                $linkPoints[] = $id;
-            }
-        }
-// var_dump($distances);
-// echo "*******\n";
-        // 处理距离
-        for ($i=0; $i < count($linkPoints); $i++) {
-            $tmpId = $linkPoints[$i];    // 当前源点
-            $tmpPoints = array_slice($linkPoints, 1);
-
-            // $tmpId城市所有道路id
-            $roadsA = City::find($tmpId)->roads->toArray();
-            $roadsId = [];
-            foreach ($roadsA as $road) {
-                $roadsId[] = $road['id'];
-            }
-// var_dump($roadsId);
-// var_dump($idA);
-            foreach ($roadsId as $rId) {
-                $cities = DB::table('cities_to_roads')->where('roadId', $rId)->pluck('cityId')->toArray();
-                if (!empty($cities)) {
-                    // var_dump($rId);
-                    $id = array_values( array_diff($cities, [$tmpId]) )[0];
-                    // var_dump($id);
-                    if ($id == $idA) {
-                        continue;
+                //当前目标城市所有道路id
+                $roadsId = [];
+                $roads = City::find($tmpId)->roads->toArray();
+                foreach ($roads as $road) {
+                    $roadsId[] = $road['id'];
+                }
+                // 获取当前目标城市直连城市的距离和id
+                $linkInfos = [];
+                foreach ($roadsId as $rId) {
+                    $cities = DB::table('cities_to_roads')->where('roadId', $rId)->pluck('cityId')->toArray();
+                    if (!empty($cities)) {
+                        $id = array_values( array_diff($cities, [$tmpId]) )[0];
+                        $linkInfos[] = ['id' => $id, 'distance' => Road::find($rId)->distance];
                     }
-                    if ($distances[$id]['distance'] > (Road::find($rId)->distance) + $distances[$tmpId]['distance']) {
-                        $distances[$id]['distance'] = Road::find($rId)->distance;
-                        $distances[$id]['trace'] = $distances[$id]['trace'] . " next: ". City::find($tmpId)->name . " to " . City::find($id)->name;
+                }
+
+                //若直连城市中含有已找到最短路径的城市，则更新当前目标城市的距离
+                foreach ($linkInfos as $linkInfo) {
+
+                    if (in_array($linkInfo['id'], $S)) {
+                        if ($tmpIds[$tmpId] > $shortests[$linkInfo['id']]['distance'] + $linkInfo['distance']) {
+                            $tmpIds[$tmpId] = $shortests[$linkInfo['id']]['distance'] + $linkInfo['distance'];
+                        }
                     }
                 }
             }
+
+
+
+            $shortestId = array_keys($tmpIds, min($tmpIds))[0];
+            // var_dump($shortestId);
+            $shortests[$shortestId] = [
+                'distance' => min($tmpIds),
+                'trace' => $shortests[$shortestId]['trace'] . ' -> ' . City::find($shortestId)->name,
+            ];
+            array_push($S, $shortestId);
+            // $tmpIds = array_diff($tmpIds, [$shortestId => $tmpIds[$shortestId]]);
         }
-
-        return $distances;
-
-
-        // return $citiesIds;
+// var_dump($shortests);exit;
     }
 }
