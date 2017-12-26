@@ -33,11 +33,6 @@ class Common {
             $points[$value] = $value;
         }
 
-        $distances = [];
-        foreach ($points as $v) {
-            $distances[$v] = INF;
-        }
-
         // A城市所有道路id
         $roadsA = City::find($idA)->roads->toArray();
         $roadsIdA = [];
@@ -45,12 +40,18 @@ class Common {
             $roadsIdA[] = $road['id'];
         }
 
-        // 设置A城市到个点的距离初始值
+        // 初始化A城市到个点的距离
+        $distances = [];
+        foreach ($points as $v) {
+            $distances[$v]['distance'] = INF;
+            $distances[$v]['trace'] = City::find($idA)->name . " -> " . City::find($v)->name;
+        }
+
         foreach ($roadsIdA as $rId) {
             $cities = DB::table('cities_to_roads')->where('roadId', $rId)->pluck('cityId')->toArray();
             if (!empty($cities)) {
                 $id = array_values( array_diff($cities, [$idA]) )[0];
-                $distances[$id] = Road::find($rId)->distance;
+                $distances[$id]['distance'] = Road::find($rId)->distance;
             }
         }
 
