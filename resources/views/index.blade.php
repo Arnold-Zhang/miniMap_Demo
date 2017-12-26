@@ -78,6 +78,7 @@
     <div id="myDiv"></div>
 
     <script>
+        // 所有城市
         var trace1 = {
           x: @json($xaxis),
           y: @json($yaxis),
@@ -90,7 +91,20 @@
           type: 'scatter',
           marker: { size: 20 }
         };
-        var data = [trace1];
+
+        // 选取的两个城市
+        var trace2 = {
+            x: [@json($cityA['xaxis']), @json($cityB['xaxis'])],
+            y: [@json($cityA['yaxis']), @json($cityB['yaxis'])],
+            type: 'scatter',
+            mode: 'markers',
+            marker: {
+                size: 20,
+                color: '#ff0000'
+            },
+        };
+        
+        var data = [trace1, trace2];
         var roads = @json($roads);
 
         var trace;

@@ -14,6 +14,11 @@ class StaticPagesController extends Controller
         $xaxis = City::orderBy('id')->pluck('xaxis')->toArray();
         $yaxis = City::orderBy('id')->pluck('yaxis')->toArray();
 
+        $citiesIds = City::pluck('id')->toArray();
+        $randomIds = array_rand($citiesIds, 2);
+        $cityA = City::find($citiesIds[$randomIds[0]])->toArray();
+        $cityB = City::find($citiesIds[$randomIds[1]])->toArray();
+
         $allRoads = Road::get();
         $roads = [];
         foreach ($allRoads as $road) {
@@ -37,6 +42,8 @@ class StaticPagesController extends Controller
             'xaxis' => $xaxis,
             'yaxis' => $yaxis,
             'roads' => $roads,
+            'cityA' =>  $cityA,
+            'cityB' =>  $cityB,
         ];
         return view('index', $param);
     }
