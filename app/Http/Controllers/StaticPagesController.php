@@ -15,13 +15,17 @@ class StaticPagesController extends Controller
         $xaxis = City::orderBy('id')->pluck('xaxis')->toArray();
         $yaxis = City::orderBy('id')->pluck('yaxis')->toArray();
 
+        // 随机选取两个城市
         $citiesIds = City::pluck('id')->toArray();
         $randomIds = array_rand($citiesIds, 2);
         $cityA = City::find($citiesIds[$randomIds[0]])->toArray();
         $cityB = City::find($citiesIds[$randomIds[1]])->toArray();
 
-        $test = Common::citiesDistance($cityA['id'], $cityB['id']);
-        var_dump($test);
+        // 两个城市最短距离与路径 arr
+        $distances = Common::citiesDistance($cityA['id'], $cityB['id']);
+        $shortestDistance = $distances[$cityB['id']];
+        // var_dump($shortestDistance);
+        // var_dump($test);
         $allRoads = Road::get();
         $roads = [];
         foreach ($allRoads as $road) {
