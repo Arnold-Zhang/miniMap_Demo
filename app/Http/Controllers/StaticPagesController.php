@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Common;
 use App\Models\City;
 use App\Models\Road;
 use Illuminate\Http\Request;
@@ -19,6 +20,8 @@ class StaticPagesController extends Controller
         $cityA = City::find($citiesIds[$randomIds[0]])->toArray();
         $cityB = City::find($citiesIds[$randomIds[1]])->toArray();
 
+        $test = Common::citiesDistance($cityA['id'], $cityB['id']);
+        var_dump($test);
         $allRoads = Road::get();
         $roads = [];
         foreach ($allRoads as $road) {
