@@ -89,6 +89,11 @@ class Common {
             }
         }
 
+        foreach ($traces as $key => $value) {
+            if ($shortests[$key] == INF) {
+                $traces[$key] .= " -> " . City::find($key)->name;
+            }
+        }
         return [
             '$shortests' => $shortests,
             'traces' => $traces
