@@ -20,8 +20,8 @@ class Common {
         // 若存在A或B没有道路,直接距离返回 '-'
         if (!in_array($idA, $citiesIds) || !in_array($idB, $citiesIds)) {
             return [
-                $idB => ['distance' => INF,
-                         'trace' => City::find($idA)->name . " to " . City::find($idB)->name
+                $idB => ['shortests' => INF,
+                         'traces' => City::find($idA)->name . " to " . City::find($idB)->name
                         ]
             ];
         }
