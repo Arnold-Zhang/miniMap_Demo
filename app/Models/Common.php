@@ -21,7 +21,7 @@ class Common {
         if (!in_array($idA, $citiesIds) || !in_array($idB, $citiesIds)) {
             return [
                 $idB => ['distance' => INF,
-                         'trace' => City::find($idA)->name . " -> " . City::find($idB)->name
+                         'trace' => City::find($idA)->name . " to " . City::find($idB)->name
                         ]
             ];
         }
@@ -30,7 +30,7 @@ class Common {
         foreach ($citiesIds as $v) {
             $traces[$v] = City::find($idA)->name;
         }
-        $traces[$idA] .= " -> " . City::find($idA)->name;
+        $traces[$idA] .= " to " . City::find($idA)->name;
         $shortests[$idA] = 0;    // 已获得最短路径的城市
 
         // 去掉A城市id
@@ -72,9 +72,9 @@ class Common {
                         if ($currentDis > ($shortests[$linkId] + $linkInfos[$linkId])) {
                             $distances[$currentCity] = $shortests[$linkId] + $linkInfos[$linkId];
                             if ($linkId == $idA) {
-                                $traces[$currentCity] = City::find($idA)->name . " -> " . City::find($currentCity)->name;
+                                $traces[$currentCity] = City::find($idA)->name . " to " . City::find($currentCity)->name;
                             }else {
-                                $traces[$currentCity] = $traces[$linkId] . " -> " . City::find($currentCity)->name;
+                                $traces[$currentCity] = $traces[$linkId] . " to " . City::find($currentCity)->name;
                             }
                         }
                     }
@@ -91,7 +91,7 @@ class Common {
 
         foreach ($traces as $key => $value) {
             if ($shortests[$key] == INF) {
-                $traces[$key] .= " -> " . City::find($key)->name;
+                $traces[$key] .= " to " . City::find($key)->name;
             }
         }
         return [

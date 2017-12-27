@@ -51,6 +51,8 @@ class StaticPagesController extends Controller
             'roads' => $roads,
             'cityA' =>  $cityA,
             'cityB' =>  $cityB,
+            'shortests' => $shortests[$cityB['id']],
+            'traces' => $traces[$cityB['id']],
         ];
         return view('index', $param);
     }
