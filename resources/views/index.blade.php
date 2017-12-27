@@ -8,6 +8,8 @@
             <label >Enter the distance between City <span style="color:red;font-size:25px;">{{$cityA['name']}}</span> and City <span style="color:red;font-size:25px;">{{$cityB['name']}}</span> :</label>
             <input type="text" class="form-control" id="distance" placeholder="enter 'INF' if unreachabel">
             <button type="button" class="btn btn-default" onclick="checkDis()">Confirm</button>
+            <button type="button" class="btn btn-default" onclick="window.location.reload();">Again</button>
+            <div class='answer'></div>
         </div>
     </div>
 </div>
@@ -149,18 +151,18 @@
             var distance = $('#distance').val();
             var shortests = "{{ $shortests }}";
             var trace = "{{ $traces }}";
-            var answer = $("<div class='answer'></div>");
             if (distance != shortests) {
-                if ($('.answer').length == 0) {
-                    if (shortests == "INF") {
-                        $('.board').after(answer.text("错误，两城市没有路径" + " !" ));
-                    }
-                    $('.board').after(answer.text("错误，正确的最短距离为 " + shortests + " !" + " 路径为 " + trace + "."));
+                if ($('.answer').length > 0) {
+                    $('.answer').empty();
                 }
+                if (shortests == "INF") {
+                    $('.answer').text("错误，两城市没有路径" + " !" );
+                }else {
+                    $('.answer').text("错误，正确的最短距离为 " + shortests + " !" + " 路径为 " + trace + ".");
+                }
+
             }else {
-                if ($('.answer').length == 0) {
-                    $('.board').after(answer.text("正确!"));
-                }
+                $('.answer').text("正确!");
             }
         }
     </script>
