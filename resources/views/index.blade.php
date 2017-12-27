@@ -6,7 +6,7 @@
     <div class="col-md-offset-3 col-md-6">
         <div class="form-group board">
             <label >Enter the distance between City <span style="color:red;font-size:25px;">{{$cityA['name']}}</span> and City <span style="color:red;font-size:25px;">{{$cityB['name']}}</span> :</label>
-            <input type="text" class="form-control" id="distance" placeholder="enter 'INF' if unreachabel">
+            <input type="text" class="form-control" id="distance" placeholder="enter 'INF' if unreachable">
             <button type="button" class="btn btn-default" onclick="checkDis()">Confirm</button>
             <button type="button" class="btn btn-default" onclick="window.location.reload();">Again</button>
             <div class='answer'></div>
