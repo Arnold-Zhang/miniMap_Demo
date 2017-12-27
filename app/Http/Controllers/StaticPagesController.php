@@ -23,7 +23,7 @@ class StaticPagesController extends Controller
 
         // 两个城市最短距离与路径 arr
         $distanceInfo = Common::citiesDistance($cityA['id'], $cityB['id']);
-        $shortests = $distanceInfo['$shortests'];
+        $shortests = $distanceInfo['shortests'];
         $traces = $distanceInfo['traces'];
 
         $allRoads = Road::get();

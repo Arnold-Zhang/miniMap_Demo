@@ -95,7 +95,7 @@ class Common {
             }
         }
         return [
-            '$shortests' => $shortests,
+            'shortests' => $shortests,
             'traces' => $traces
 
         ];
